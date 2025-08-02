@@ -37,7 +37,8 @@ To build and run this project, you need the following:
 
 3. Run the executable:
    ```bash
-   ./build/gameOfLife.exe
+   cd build
+   ./gameOfLife.exe
    ```
 
 ## Controls
