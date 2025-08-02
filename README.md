@@ -17,7 +17,7 @@ To build and run this project, you need the following:
 - **C Compiler**: GCC or any compatible compiler.
 - **CMake**: Version 3.31 or higher.
 - **Dependencies**:
-  - GLFW (Static library `glfw.a` included in the `externals` folder)
+  - GLFW (Static library `glfw.a` included for windows in the `externals` folder)
   - OpenGL
   - GLAD (Included in the `externals` folder)
 
@@ -45,6 +45,7 @@ To build and run this project, you need the following:
 - **Keyboard**:
   - `W`/`S`: Move up/down.
   - `A`/`D`: Move left/right.
+  - `UP`/`DOWN`: Increase/decrease grid update speed.
 - **Mouse Scroll**: Zoom in/out.
 
 ## File Structure

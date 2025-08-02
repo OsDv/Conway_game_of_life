@@ -21,9 +21,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 //
 void myInit();
-
+// Colors
+#define CELLS_COLOR 1.0f,1.0f,1.0f,1.0f
+#define BACKGROUND_COLOR 0.0f, 0.0f, 0.0f, 0.0f
 
 float deltaTime = 0.0f; // Delta time ;)
+float updateRation = 0.1; // seconds for one generation
+int generationRatio = 10;
+int generationRatioUpdate = 0;
 // Game of life grid dimentions
 #define GRID_HEIGHT 1000
 #define GRID_WIDTH 1000
@@ -167,10 +172,10 @@ int main(void)
 
     //Cell vertices and Indexes
     float vertices[] = {
-        0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,
-        0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,
-        1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,
-        1.0f,1.0f,0.0f,0.0f,0.0f,0.0f,1.0f,
+        0.0f,0.0f,0.0f,CELLS_COLOR,
+        0.0f,1.0f,0.0f,CELLS_COLOR,
+        1.0f,0.0f,0.0f,CELLS_COLOR,
+        1.0f,1.0f,0.0f,CELLS_COLOR,
     };
     unsigned int indices[] = {
         0, 1, 2,
@@ -208,6 +213,7 @@ int main(void)
     // timers to print in console and update the grid
     float consolePrintTimer = 0.0f;
     float updateTimer = 0.0f;
+    float inputTimer = 0.0f;
 
     // start with random grid
     generateRandomGrid(*activeGrid);
@@ -218,7 +224,7 @@ int main(void)
     {
         // Input processing
         processInput(window);
-        glClearColor(0.2f, 0.2f, 0.3f, 1.0f);
+        glClearColor(BACKGROUND_COLOR);
         glm_vec3_add(cameraPosition,front,cameraCenter);
         glm_lookat(cameraPosition,cameraCenter ,up,view);
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, *view);
@@ -233,11 +239,24 @@ int main(void)
         lastFrame = currentFrame;
         consolePrintTimer += deltaTime;
         updateTimer += deltaTime;
+        inputTimer+=deltaTime;
         fps++;
+
+        if (inputTimer>=0.4f){
+            if (generationRatioUpdate){
+                generationRatio += generationRatioUpdate ;
+                if (generationRatio==0) generationRatio =1;
+                updateRation = 1 / (float) generationRatio;
+                generationRatioUpdate =0;
+            }
+
+            inputTimer =0.0f;
+        }
         if (consolePrintTimer >= 1.0f)
         {
+
             consolePrintTimer = 0.0f;
-            printf("fps: %f\n", fps);
+            printf("fps: %d, Generation: %d generation/second\n", fps,generationRatio);
             fps = 0;
         }
         /*if (updateTimer >= 0.1f) // old single thread
@@ -248,7 +267,7 @@ int main(void)
             float endTime = glfwGetTime();
             std::cout << "Render time: " << endTime - startTime << "s life: "<< liveCounter << std::endl;
         }*/
-        if (updateTimer >= 0.1f && calculation_in_progress==0)
+        if (updateTimer >= updateRation && calculation_in_progress==0)
         {
             updateTimer = 0.0f;
             int (*tem)[GRID_HEIGHT][GRID_WIDTH] = swapGrid;
@@ -330,6 +349,14 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         //cameraPosition += right*cameraVelocity;
         glm_vec3_add(cameraPosition,cameraRightSpeed,cameraPosition);
+
+    // update generation Ratio
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        generationRatioUpdate = 1;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+        generationRatioUpdate=-1;
+    }
 
 }
 
