@@ -23,6 +23,7 @@ To build and run this project, you need the following:
 
 ## Installation
 
+### Desktop Installation Instructions
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/game_of_life.git
@@ -39,7 +40,19 @@ To build and run this project, you need the following:
    ```bash
    ./build/gameOfLife.exe
    ```
+### WebAssembly Installation Instructions:
 
+1. Ensure you have Emscripten installed and configured.
+2. Compile the project with Emscripten:
+   ```bash
+   emcmake cmake -S . -B build -G Ninja
+   emmake Ninja -C build
+   ```
+3. Run the WebAssembly application:
+   ```bash
+   emrun --no_browser --port 8080 build/gameOfLife.html
+   ```
+4. Open your web browser and navigate to `http://localhost:8080/gameOfLife.html`.
 ## Controls
 
 - **Keyboard**:
