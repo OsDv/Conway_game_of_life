@@ -10,6 +10,13 @@
 	</head>
 
 	<body>
+		<script>
+			function playSound(soundFile) {
+  				new Audio(soundFile).play();
+			}
+		</script>
+
+		<button onclick="playSound('./emorbo3.mp4')">Play Sound</button>
 		<header>
 			<h1>Conway's Game Of Life</h1>
 		</header>
