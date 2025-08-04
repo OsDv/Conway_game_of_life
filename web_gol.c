@@ -87,9 +87,9 @@ int main(){
             DrawRectangleLines( 10, 10, 250, 113, BLUE);
 
             DrawText("Game controls:", 20, 20, 10, BLACK);
-            DrawText("- WASD to move Camera", 40, 40, 10, DARKGRAY);
-            DrawText("- Mouse Wheel to Zoom in-out", 40, 60, 10, DARKGRAY);
-            DrawText("- R to rest the grid", 40, 80, 10, DARKGRAY);
+            DrawText("- WASD to move Camera", 40, 40, 10, CELL_COLOR);
+            DrawText("- Mouse Wheel to Zoom in-out", 40, 60, 10, CELL_COLOR);
+            DrawText("- R to rest the grid", 40, 80, 10, CELL_COLOR);
         EndDrawing();
     }
 
