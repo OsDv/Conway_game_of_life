@@ -224,7 +224,7 @@ void * work_generate_next_generation(void* args)
     }
 
     calculation_in_progress =0;
-    return NULL;
+    return 0;
 }
 
 void main_loo()
