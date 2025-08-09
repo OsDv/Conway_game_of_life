@@ -61,7 +61,7 @@ build CMakeFiles/gameOfLife.dir/web_gol.c.o: C_COMPILER__gameOfLife_unscanned_ C
 # Link the executable gameOfLife.html
 
 build gameOfLife.html: C_EXECUTABLE_LINKER__gameOfLife_ CMakeFiles/gameOfLife.dir/web_gol.c.o
-  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -sASYNCIFY -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html
+  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -sASYNCIFY -pthread -DPLATFORM_WEB
   LINK_PATH = -LC:/Users/dell/Documents/GitHub/game_of_life/externals
   OBJECT_DIR = CMakeFiles\gameOfLife.dir
   POST_BUILD = cd .

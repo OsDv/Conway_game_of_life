@@ -3,6 +3,11 @@
 		"glad.h": "c",
 		"emscripten.h": "c",
 		"raylib.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"ranges": "c",
+		"limits": "c",
+		"semaphore": "c",
+		"chrono": "c",
+		"random": "c"
 	}
 }
