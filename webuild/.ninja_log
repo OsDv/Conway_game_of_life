@@ -1,9 +1,7 @@
 # ninja log v6
-21	342	7764141588471145	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
-343	7489	7764141591685955	gameOfLife.html	e06526c4c984407e
-18	1033	7764143756214101	build.ninja	d3b765811a7512ea
-18	1033	7764143756154253	C:/Users/dell/Documents/GitHub/game_of_life/webuild/cmake_install.cmake	d3b765811a7512ea
-19	1060	7764143756214101	build.ninja	d3b765811a7512ea
-19	1060	7764143756214101	C:/Users/dell/Documents/GitHub/game_of_life/webuild/cmake_install.cmake	d3b765811a7512ea
-19	334	7764143756735903	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
+19	1060	7764147426380264	C:/Users/dell/Documents/GitHub/game_of_life/webuild/cmake_install.cmake	d3b765811a7512ea
+19	1060	7764147426451461	build.ninja	d3b765811a7512ea
 335	6827	7764143759894248	gameOfLife.html	8fbab424b11cb136
+19	334	7764143756735903	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
+23	366	7764147491869850	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
+367	11726	7764147495304083	gameOfLife.html	8fbab424b11cb136
