@@ -8,6 +8,7 @@
 		"limits": "c",
 		"semaphore": "c",
 		"chrono": "c",
-		"random": "c"
+		"random": "c",
+		"cstdlib": "c"
 	}
 }

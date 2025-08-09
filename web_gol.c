@@ -1,6 +1,6 @@
 #include <raylib.h>
 #include <math.h>
-#include <pthread.h>
+//#include <pthread.h>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -8,7 +8,7 @@
 
 // Multi-threading things
 volatile int calculation_in_progress = 0; // flag for next generation calculation thread
-pthread_t generation_thread; // used to calculate next generation in parallel
+//pthread_t generation_thread; // used to calculate next generation in parallel
 int reset_request = 0; // boolean to clear grid
 int randomize_request = 0 ;// boolean to reset the grid with new random distribution
 int liveCounterNew = 0; // population in the next generation calculated by the thread
@@ -82,7 +82,7 @@ int main(){
     generateRandomGrid(*activeGrid);
     gridLifeTime =0;
     // multi-threading things
-    calculation_in_progress =1;
+    /*calculation_in_progress =1;
     int err = pthread_create(&generation_thread, NULL, work_generate_next_generation, NULL);
     if ( err != 0) {
         // printf("Error creating thread: %s\n", strerror(err)); // used for debugging
@@ -91,7 +91,7 @@ int main(){
         // Detach thread so its resources are automatically released when it terminates
         pthread_detach(generation_thread);
         // printf("Thread created successfully\n"); // used for debugging
-    }
+    }*/
     //
 
     camera.zoom = 10;
@@ -235,12 +235,23 @@ void main_loo()
             updateTimer+=deltaTIme*targetGenerationsPerSecond;
             gridLifeTime += GetFrameTime();
         }
-        // single thread version
-        /*if (updateTimer>=0.1f){
+        // single thread version --(for Github Pages)
+        if (updateTimer>=1.0f){
             updateTimer=0;
             nextGeneration(*activeGrid);
-        }*/
-        
+            if (reset_request)  
+            {
+                resetGrid(*activeGrid);
+                reset_request = 0;
+                current_generation = 0; // reset generation count
+                gridLifeTime =0; // reset the grid life time
+                if (randomize_request) {
+                    generateRandomGrid(*activeGrid);
+                    randomize_request =  0;
+                }
+            }
+        }
+        /*
         // multi-threading version
         if (updateTimer >= 1.0 && calculation_in_progress==0)
         {
@@ -274,7 +285,7 @@ void main_loo()
                 pthread_detach(generation_thread);
                 //printf("Thread created successfully\n"); //used for debugging
             }
-        }
+        }*/
 
 
 
@@ -328,8 +339,8 @@ void ProcessInputs()
         Paused = !Paused; // toggle pause state
         updateTimer = 0.0f; // reset the timer when paused
         if (!Paused){
-            calculation_in_progress =1;
-            pthread_create(&generation_thread, NULL, work_generate_next_generation, NULL);
+            // calculation_in_progress =1;
+            // pthread_create(&generation_thread, NULL, work_generate_next_generation, NULL);
             gridLifeTime = 0;
             current_generation = 0;
         }
