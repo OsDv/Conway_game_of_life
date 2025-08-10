@@ -14,6 +14,7 @@ if (EMSCRIPTEN)
 include_directories(${CMAKE_SOURCE_DIR}/externals)
 add_executable(gameOfLife
         web_gol.c
+        #single_thread_gol.c
 )
 set(CMAKE_EXECUTABLE_SUFFIX ".html")
 string(APPEND LINK_FLAGS "-Os -Wall ")
