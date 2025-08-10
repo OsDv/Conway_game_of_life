@@ -124,3 +124,8 @@ section:hover {
 			transform: scale(1.05);
 			transition: transform 0.3s ease;
 		}
+code 
+{
+	font-family: 'Courier New', Courier, monospace;
+	letter-spacing: 3px;
+}
