@@ -36,6 +36,40 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/dell/Documents/GitHub/game_of_life/build/
 # =============================================================================
+# Object build statements for EXECUTABLE target gpu_gol
+
+
+#############################################
+# Order-only phony target for gpu_gol
+
+build cmake_object_order_depends_target_gpu_gol: phony || .
+
+build CMakeFiles/gpu_gol.dir/gpu_gol.c.obj: C_COMPILER__gpu_gol_unscanned_ C$:/Users/dell/Documents/GitHub/game_of_life/gpu_gol.c || cmake_object_order_depends_target_gpu_gol
+  DEP_FILE = CMakeFiles\gpu_gol.dir\gpu_gol.c.obj.d
+  FLAGS = -std=gnu99
+  INCLUDES = -IC:/Users/dell/Documents/GitHub/game_of_life/externals
+  OBJECT_DIR = CMakeFiles\gpu_gol.dir
+  OBJECT_FILE_DIR = CMakeFiles\gpu_gol.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target gpu_gol
+
+
+#############################################
+# Link the executable gpu_gol.exe
+
+build gpu_gol.exe: C_EXECUTABLE_LINKER__gpu_gol_ CMakeFiles/gpu_gol.dir/gpu_gol.c.obj | C$:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib.a
+  LINK_LIBRARIES = C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib.a  -lopengl32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_PATH = -LC:/Users/dell/Documents/GitHub/game_of_life/externals
+  OBJECT_DIR = CMakeFiles\gpu_gol.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = gpu_gol.exe
+  TARGET_IMPLIB = libgpu_gol.dll.a
+  TARGET_PDB = gpu_gol.exe.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target gameOfLife
 
 
@@ -138,6 +172,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build gameOfLife: phony gameOfLife.exe
 
+build gpu_gol: phony gpu_gol.exe
+
 build web_gol: phony web_gol.exe
 
 # =============================================================================
@@ -155,7 +191,7 @@ build codegen: phony
 #############################################
 # Folder: C:/Users/dell/Documents/GitHub/game_of_life/build
 
-build all: phony gameOfLife.exe web_gol.exe
+build all: phony gpu_gol.exe gameOfLife.exe web_gol.exe
 
 # =============================================================================
 # Built-in targets

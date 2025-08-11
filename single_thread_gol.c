@@ -5,8 +5,7 @@
 #endif
 
 
-int reset_request = 0; // boolean to clear grid
-int randomize_request = 0 ;// boolean to reset the grid with new random distribution
+
 
 int current_generation = 0; // current generation number, used for debugging
 float gridLifeTime = 0.0f; // 
@@ -185,24 +184,13 @@ void main_loo()
         if (!Paused){
             float deltaTIme = GetFrameTime();
             updateTimer+=deltaTIme*targetGenerationsPerSecond;
-            gridLifeTime += GetFrameTime();
+            gridLifeTime += deltaTIme;
         }
         // single thread version --(for Github Pages)
         if (updateTimer>=1.0f){
             updateTimer=0;
             nextGeneration(*activeGrid);
 			current_generation++;
-            if (reset_request)  
-            {
-                resetGrid(*activeGrid);
-                reset_request = 0;
-                current_generation = 0; // reset generation count
-                gridLifeTime =0; // reset the grid life time
-                if (randomize_request) {
-                    generateRandomGrid(*activeGrid);
-                    randomize_request =  0;
-                }
-            }
         }
 
 

@@ -36,6 +36,40 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/dell/Documents/GitHub/game_of_life/webuild/
 # =============================================================================
+# Object build statements for EXECUTABLE target gpu_gol
+
+
+#############################################
+# Order-only phony target for gpu_gol
+
+build cmake_object_order_depends_target_gpu_gol: phony || .
+
+build CMakeFiles/gpu_gol.dir/gpu_gol.c.o: C_COMPILER__gpu_gol_unscanned_ C$:/Users/dell/Documents/GitHub/game_of_life/gpu_gol.c || cmake_object_order_depends_target_gpu_gol
+  DEFINES = -DPLATFORM_WEB
+  DEP_FILE = CMakeFiles\gpu_gol.dir\gpu_gol.c.o.d
+  FLAGS = -std=gnu99
+  INCLUDES = -IC:/Users/dell/Documents/GitHub/game_of_life/externals
+  OBJECT_DIR = CMakeFiles\gpu_gol.dir
+  OBJECT_FILE_DIR = CMakeFiles\gpu_gol.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target gpu_gol
+
+
+#############################################
+# Link the executable gpu_gol.html
+
+build gpu_gol.html: C_EXECUTABLE_LINKER__gpu_gol_ CMakeFiles/gpu_gol.dir/gpu_gol.c.o
+  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -sASYNCIFY -pthread -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html --preload-file C:/Users/dell/Documents/GitHub/game_of_life/es_gol.fs@/es_gol.fs --preload-file C:/Users/dell/Documents/GitHub/game_of_life/es_draw.fs@/es_draw.fs
+  LINK_PATH = -LC:/Users/dell/Documents/GitHub/game_of_life/externals
+  OBJECT_DIR = CMakeFiles\gpu_gol.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = gpu_gol.html
+  TARGET_PDB = gpu_gol.html.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target gameOfLife
 
 
@@ -44,9 +78,9 @@ cmake_ninja_workdir = C$:/Users/dell/Documents/GitHub/game_of_life/webuild/
 
 build cmake_object_order_depends_target_gameOfLife: phony || .
 
-build CMakeFiles/gameOfLife.dir/single_thread_gol.c.o: C_COMPILER__gameOfLife_unscanned_ C$:/Users/dell/Documents/GitHub/game_of_life/single_thread_gol.c || cmake_object_order_depends_target_gameOfLife
+build CMakeFiles/gameOfLife.dir/web_gol.c.o: C_COMPILER__gameOfLife_unscanned_ C$:/Users/dell/Documents/GitHub/game_of_life/web_gol.c || cmake_object_order_depends_target_gameOfLife
   DEFINES = -DPLATFORM_WEB
-  DEP_FILE = CMakeFiles\gameOfLife.dir\single_thread_gol.c.o.d
+  DEP_FILE = CMakeFiles\gameOfLife.dir\web_gol.c.o.d
   FLAGS = -std=gnu99
   INCLUDES = -IC:/Users/dell/Documents/GitHub/game_of_life/externals
   OBJECT_DIR = CMakeFiles\gameOfLife.dir
@@ -60,8 +94,8 @@ build CMakeFiles/gameOfLife.dir/single_thread_gol.c.o: C_COMPILER__gameOfLife_un
 #############################################
 # Link the executable gameOfLife.html
 
-build gameOfLife.html: C_EXECUTABLE_LINKER__gameOfLife_ CMakeFiles/gameOfLife.dir/single_thread_gol.c.o
-  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -sASYNCIFY -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html
+build gameOfLife.html: C_EXECUTABLE_LINKER__gameOfLife_ CMakeFiles/gameOfLife.dir/web_gol.c.o
+  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -sASYNCIFY -pthread -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html
   LINK_PATH = -LC:/Users/dell/Documents/GitHub/game_of_life/externals
   OBJECT_DIR = CMakeFiles\gameOfLife.dir
   POST_BUILD = cd .
@@ -97,6 +131,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 build gameOfLife: phony gameOfLife.html
 
+build gpu_gol: phony gpu_gol.html
+
 # =============================================================================
 # Folder targets.
 
@@ -112,7 +148,7 @@ build codegen: phony
 #############################################
 # Folder: C:/Users/dell/Documents/GitHub/game_of_life/webuild
 
-build all: phony gameOfLife.html
+build all: phony gpu_gol.html gameOfLife.html
 
 # =============================================================================
 # Built-in targets

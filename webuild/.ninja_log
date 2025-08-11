@@ -1,7 +1,12 @@
 # ninja log v6
-11	1022	7765181638671502	C:/Users/dell/Documents/GitHub/game_of_life/webuild/cmake_install.cmake	d3b765811a7512ea
-11	1022	7765181638792097	build.ninja	d3b765811a7512ea
-20	6140	7764152205495990	gameOfLife.html	8d73ffd1de15e3c2
-29	353	7764148826765943	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
 133	1891	7765181816467584	CMakeFiles/gameOfLife.dir/single_thread_gol.c.o	58584cf34068873e
-1894	29452	7765181834074555	gameOfLife.html	3c65a94af147e58b
+7	820	7765720617515281	CMakeFiles/gpu_gol.dir/gpu_gol.c.o	4c2058bff635b3e5
+29	353	7764148826765943	CMakeFiles/gameOfLife.dir/web_gol.c.o	e6ca5cda1f755929
+117	25075	7765715994215337	gameOfLife.html	8d73ffd1de15e3c2
+11	1022	7765749122112485	build.ninja	d3b765811a7512ea
+11	1022	7765749122071555	C:/Users/dell/Documents/GitHub/game_of_life/webuild/cmake_install.cmake	d3b765811a7512ea
+49	14167	7765726848920158	gpu_gol.html	2394b54cae0c5ea1
+3	392	7765749887065682	CMakeFiles/gpu_gol.dir/gpu_gol.c.o	4c2058bff635b3e5
+393	8322	7765749890965220	gpu_gol.html	b0a891d8cd07afea
+4	356	7765751718542967	CMakeFiles/gpu_gol.dir/gpu_gol.c.o	4c2058bff635b3e5
+357	6955	7765751722070302	gpu_gol.html	b0a891d8cd07afea

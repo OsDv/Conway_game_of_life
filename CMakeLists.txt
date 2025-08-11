@@ -9,7 +9,9 @@ include_directories(${CMAKE_SOURCE_DIR}/externals)
 
 
 
-
+add_executable(gpu_gol
+        gpu_gol.c
+)
 if (EMSCRIPTEN)
 include_directories(${CMAKE_SOURCE_DIR}/externals)
 add_executable(gameOfLife
@@ -26,9 +28,12 @@ string(APPEND LINK_FLAGS "-sASYNCIFY ")
 #string(APPEND LINK_FLAGS "-s PTHREAD_POOL_SIZE=4 ")
 string(APPEND LINK_FLAGS "-pthread ")
 string(APPEND LINK_FLAGS "-DPLATFORM_WEB ")
-string(APPEND LINK_FLAGS "--shell-file ${CMAKE_SOURCE_DIR}/template.html")
+string(APPEND LINK_FLAGS "--shell-file ${CMAKE_SOURCE_DIR}/template.html ")
 set_target_properties(gameOfLife PROPERTIES LINK_FLAGS "${LINK_FLAGS}")
 target_compile_definitions(gameOfLife PRIVATE PLATFORM_WEB)
+string(APPEND LINK_FLAGS "--preload-file ${CMAKE_SOURCE_DIR}/es_gol.fs@/es_gol.fs --preload-file ${CMAKE_SOURCE_DIR}/es_draw.fs@/es_draw.fs")
+set_target_properties(gpu_gol PROPERTIES LINK_FLAGS "${LINK_FLAGS}")
+target_compile_definitions(gpu_gol PRIVATE PLATFORM_WEB)
 else()
 add_executable(gameOfLife
         game_of_life.c
@@ -36,8 +41,10 @@ add_executable(gameOfLife
 )
 add_executable(web_gol
         web_gol.c
+
 )
 find_package(Threads REQUIRED)
 target_link_libraries(web_gol PRIVATE ${CMAKE_SOURCE_DIR}/externals/libraylib.a -lopengl32 -lgdi32 -lwinmm Threads::Threads)
+target_link_libraries(gpu_gol PRIVATE ${CMAKE_SOURCE_DIR}/externals/libraylib.a -lopengl32 -lgdi32 -lwinmm Threads::Threads)
 target_link_libraries(gameOfLife glfw3 opengl32 Threads::Threads)
 endif()
