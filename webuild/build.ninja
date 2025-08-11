@@ -61,7 +61,7 @@ build CMakeFiles/gpu_gol.dir/gpu_gol.c.o: C_COMPILER__gpu_gol_unscanned_ C$:/Use
 # Link the executable gpu_gol.html
 
 build gpu_gol.html: C_EXECUTABLE_LINKER__gpu_gol_ CMakeFiles/gpu_gol.dir/gpu_gol.c.o
-  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -s USE_WEBGL2=1 -sASYNCIFY -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html --preload-file C:/Users/dell/Documents/GitHub/game_of_life/es_gol.fs@/es_gol.fs --preload-file C:/Users/dell/Documents/GitHub/game_of_life/es_draw.fs@/es_draw.fs --preload-file C:/Users/dell/Documents/GitHub/game_of_life/es_web.vs@/es_web.vs
+  LINK_FLAGS = -Os -Wall C:/Users/dell/Documents/GitHub/game_of_life/externals/libraylib_web.a -I C:/Users/dell/Documents/GitHub/game_of_life/externals -s USE_GLFW=3 -s USE_WEBGL2=1 -sASYNCIFY -DPLATFORM_WEB --shell-file C:/Users/dell/Documents/GitHub/game_of_life/template.html --embed-file C:/Users/dell/Documents/GitHub/game_of_life/es_gol.fs@/es_gol.fs --embed-file C:/Users/dell/Documents/GitHub/game_of_life/es_draw.fs@/es_draw.fs --embed-file C:/Users/dell/Documents/GitHub/game_of_life/es_web.vs@/es_web.vs
   LINK_PATH = -LC:/Users/dell/Documents/GitHub/game_of_life/externals
   OBJECT_DIR = CMakeFiles\gpu_gol.dir
   POST_BUILD = cd .
