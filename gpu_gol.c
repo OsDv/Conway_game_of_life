@@ -21,13 +21,17 @@ const float MAX_ZOOM = WIDTH / 20;
 Camera2D camera={0} ;
 float cameraVelocity = GRID_WIDTH / 100;
 float cameraZoomRelatedVelocity ;
-int targetGenerationsPerSecond = 5; // target generations per second
+int targetGenerationsPerSecond = 10; // target generations per second
 //int liveCounter=0;
 unsigned int liveCounterLocation=0;
 // Manualy Draw buffer
 #define MAX_DRAW_COMMANDS 10
 int drawLocation[2]={-1,-1};
 bool isDrawCommand = false;
+// FPS Setting
+int FPS_VALUES[] = {40,60,90,120,144};
+int FPS_VALUES_COUNT = 5;
+int current_fps = 1;
 
 // Functions
 //
@@ -43,7 +47,7 @@ void generateRandomGrid(RenderTexture2D tex);
 // Global Variables
 bool Paused = false;
 bool isDrawGrid = false;
-bool isDrawStats=false;
+bool isDrawStats=true;
 // Draw Grid Properties
 const float GridLinesThickness = 0.05f;
 const float GridLinesOffset = GridLinesThickness / 2;
@@ -82,8 +86,8 @@ int main()
 	generateRandomGrid(state[selectedTexture]);
 
 	#ifdef __EMSCRIPTEN__
-	ManualDrawShader = LoadShader(NULL,"es_draw.fs");
-	shader = LoadShader(NULL,"es_gol.fs");
+	ManualDrawShader = LoadShader("es_web.vs","es_draw.fs");
+	shader = LoadShader("es_web.vs","es_gol.fs");
 	if(!IsShaderValid(ManualDrawShader)) return 0x10;
 	Vector2 gridSize = {GRID_WIDTH, GRID_HEIGHT};
 	int size_loc = GetShaderLocation(shader, "gridSize");
@@ -123,10 +127,6 @@ void ProcessInputs()
     if (IsKeyPressed(KEY_SPACE)) {
         Paused = !Paused; // toggle pause state
         updateTimer = 0.0f; // reset the timer when paused
-        if (!Paused){
-            gridLifeTime = 0;
-            current_generation = 0;
-        }
     }
     // Toggle Stats draw
     if (IsKeyPressed(KEY_TAB)) isDrawStats=!isDrawStats;
@@ -168,10 +168,17 @@ void ProcessInputs()
 				drawLocation[0] = cellX;
 				drawLocation[1]= cellY;
 				isDrawCommand = true;
-				printf("Drawing! on: %d, %d\n",cellX,cellY);
+				//printf("Drawing! on: %d, %d\n",cellX,cellY);
+				gridLifeTime = 0;
+            	current_generation = 0;
 			}
 			Paused= true;
 		}
+	}
+	// Fps settings
+	if (IsKeyPressed(KEY_F)){
+		current_fps = (current_fps+1)%FPS_VALUES_COUNT;
+		SetTargetFPS(FPS_VALUES[current_fps]);
 	}
 	
 }
@@ -208,7 +215,7 @@ void main_loop()
 	}
 	// Next Generation
 	if (updateTimer>=1.0f){
-		updateTimer=0;
+		updateTimer-=1.0;
 		BeginTextureMode(state[1-selectedTexture]);
 			ClearBackground(BLACK);
 			BeginShaderMode(shader);
@@ -239,11 +246,14 @@ void main_loop()
 			DrawText(TextFormat("- DOWN/UP Adjust update speed: %d gen/s",targetGenerationsPerSecond), 40, 140, fontSize, CELL_COLOR);
 			// Stats
 			DrawRectangle( 10, 200, 350, 100, Fade(LIME, 0.5f));
-			DrawRectangleLines( 10, 200, 350, 100, GREEN);
+			DrawRectangleLines( 10, 200, 350, 130, GREEN);
 			DrawText(TextFormat("Generation: %d", current_generation), 40, 230, 20, CELL_COLOR);
 			//DrawText(TextFormat("Population: %d", liveCounter), 40, 250, 20, CELL_COLOR);
 			DrawText(TextFormat("Generations per second: %.2f ",current_generation /(gridLifeTime+1)), 40, 270, 20, CELL_COLOR);
-			DrawText("[TAB] TO HIDE", 50, 310, 25, Fade(YELLOW,0.7f));
+			DrawText(TextFormat("Target FPS: %d ",FPS_VALUES[current_fps]), 40, 300, 20, CELL_COLOR);
+			DrawFPS(WIDTH-300,10);
+			
+			DrawText("[TAB] TO HIDE", 50, 330, 25, Fade(YELLOW,0.7f));
 			if (Paused)
 			{
 				
@@ -278,6 +288,8 @@ void DrawGridLInes()
 void resetGrid(RenderTexture2D tex)
 {
 	// liveCounter=0;
+	gridLifeTime = 0;
+	current_generation = 0;
 	BeginTextureMode(tex);
 		ClearBackground(BLACK);
 	EndTextureMode();

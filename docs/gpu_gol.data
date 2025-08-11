@@ -1,16 +1,19 @@
+#version 300 es
 precision mediump float;
 
-varying vec2 fragTexCoord;
+in vec2 fragTexCoord;
 
 uniform sampler2D texture0;
 uniform vec2 invertionTarget; // Pass as float (x, y)
 uniform vec2 gridSize;
 
+out vec4 FragColor;
+
 void main() {
     vec2 fragPixel = vec2(floor(fragTexCoord.x * gridSize.x), floor(fragTexCoord.y * gridSize.y));
     fragPixel.y = gridSize.y - fragPixel.y - 1.0;
 
-    vec4 t = texture2D(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
+    vec4 t = texture(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
 
     // Compare with invertionTarget (use a small epsilon for float comparison)
     float isTarget = step(0.0, 0.5 - abs(fragPixel.x - invertionTarget.x)) * step(0.0, 0.5 - abs(fragPixel.y - invertionTarget.y));
@@ -18,23 +21,24 @@ void main() {
     vec3 inverted = vec3(1.0) - t.xyz;
     vec3 color = mix(t.xyz, inverted, isTarget);
 
-    gl_FragColor = vec4(color, 1.0);
-}precision mediump float;
-varying vec2 fragTexCoord;
+    FragColor = vec4(color, 1.0);
+}#version 300 es
+precision mediump float;
+
+in vec2 fragTexCoord;
 
 uniform sampler2D texture0;
 uniform vec2 gridSize;
 
+out vec4 FragColor;
+
 float transition(float state, float neighbors) {
-    // transition table: 0,0,0,1,0,0,0,0,0, 0,0,1,1,0,0,0,0,0
     // Dead: 3 neighbors -> 1
     // Alive: 2 or 3 neighbors -> 1
     if (state < 0.5) {
-        // Dead cell
         if (neighbors == 3.0) return 1.0;
         else return 0.0;
     } else {
-        // Live cell
         if (neighbors == 2.0 || neighbors == 3.0) return 1.0;
         else return 0.0;
     }
@@ -43,7 +47,7 @@ float transition(float state, float neighbors) {
 float grid(float x, float y) {
     float tx = x / gridSize.x;
     float ty = 1.0 - y / gridSize.y;
-    vec4 t = texture2D(texture0, vec2(tx, ty));
+    vec4 t = texture(texture0, vec2(tx, ty));
     return t.x > 0.5 ? 1.0 : 0.0;
 }
 
@@ -57,8 +61,24 @@ void main() {
             liveNeighbours += grid(cx + i, cy + j);
         }
     }
-    vec4 t = texture2D(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
+    vec4 t = texture(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
     float state = t.x > 0.5 ? 1.0 : 0.0;
     float next = transition(state, liveNeighbours);
-    gl_FragColor = vec4(next, next, next, 1.0);
+    FragColor = vec4(next, next, next, 1.0);
+}#version 300 es
+precision mediump float;
+
+in vec3 vertexPosition;
+in vec2 vertexTexCoord;
+in vec4 vertexColor;
+
+out vec2 fragTexCoord;
+out vec4 fragColor;
+
+uniform mat4 mvp;
+
+void main() {
+    fragTexCoord = vertexTexCoord;
+    fragColor = vertexColor;
+    gl_Position = mvp * vec4(vertexPosition, 1.0);
 }

@@ -1,19 +1,20 @@
+#version 300 es
 precision mediump float;
-varying vec2 fragTexCoord;
+
+in vec2 fragTexCoord;
 
 uniform sampler2D texture0;
 uniform vec2 gridSize;
 
+out vec4 FragColor;
+
 float transition(float state, float neighbors) {
-    // transition table: 0,0,0,1,0,0,0,0,0, 0,0,1,1,0,0,0,0,0
     // Dead: 3 neighbors -> 1
     // Alive: 2 or 3 neighbors -> 1
     if (state < 0.5) {
-        // Dead cell
         if (neighbors == 3.0) return 1.0;
         else return 0.0;
     } else {
-        // Live cell
         if (neighbors == 2.0 || neighbors == 3.0) return 1.0;
         else return 0.0;
     }
@@ -22,7 +23,7 @@ float transition(float state, float neighbors) {
 float grid(float x, float y) {
     float tx = x / gridSize.x;
     float ty = 1.0 - y / gridSize.y;
-    vec4 t = texture2D(texture0, vec2(tx, ty));
+    vec4 t = texture(texture0, vec2(tx, ty));
     return t.x > 0.5 ? 1.0 : 0.0;
 }
 
@@ -36,8 +37,8 @@ void main() {
             liveNeighbours += grid(cx + i, cy + j);
         }
     }
-    vec4 t = texture2D(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
+    vec4 t = texture(texture0, vec2(fragTexCoord.x, 1.0 - fragTexCoord.y));
     float state = t.x > 0.5 ? 1.0 : 0.0;
     float next = transition(state, liveNeighbours);
-    gl_FragColor = vec4(next, next, next, 1.0);
+    FragColor = vec4(next, next, next, 1.0);
 }
